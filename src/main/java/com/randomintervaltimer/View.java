@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
 public class View extends Application {
     private Controller controller = new Controller();
@@ -13,9 +14,13 @@ public class View extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, 400, 300);
         
-        Button startBtn = new Button("Start Work");
-        startBtn.setOnAction(event -> controller.handleButtonClick());
-        root.getChildren().add(startBtn);
+        HBox btnBox = new HBox();
+        Button startBtn = new Button("Start");
+        Button stopBtn = new Button("Stop");
+        startBtn.setOnAction(event -> controller.handleStartButtonClick());
+        stopBtn.setOnAction(event -> controller.handleStopButtonClick());
+        btnBox.getChildren().addAll(startBtn, stopBtn);
+        root.getChildren().addAll(btnBox);
 
 
         stage.setTitle("Random Interval Timer");

@@ -7,6 +7,9 @@ Since the Pomodoro method improves many people's productivity, I wanted to match
 ## How do I use it?
 Click the Start button to start your current period (work/break), and click pause/resume as needed. When your time period is over, the timer will automatically switch and prepare to start the next period when you press the button. Note that, by nature of the timer's goal, a countdown wil **not** be shown on the timer.
 
+## Current status
+Single thread timer when button clicked,
+
 ## Psychology Resources
 - [Operant Conditioning](https://www.simplypsychology.org/operant-conditioning.html)
 - [Variable Interval Reinforcement](https://www.parentingforbrain.com/schedules-of-reinforcement/)

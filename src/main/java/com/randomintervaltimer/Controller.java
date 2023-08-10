@@ -1,23 +1,31 @@
 package com.randomintervaltimer;
 
 public class Controller {
-    private Timer timer;
+    private Model model;
 
 
     Controller(){
-        timer = new Timer();
+        model = new Model();
     }
 
-    public void handleButtonClick(){
-        State status = timer.getStatus();
+    public void handleStartButtonClick(){
+        State status = model.getStatus();
         if(status.isPaused()){
-            timer.resume();
+            model.resume();
         } else if (status.getTask() == State.Task.Work || status.getTask() == State.Task.Break){
-            timer.pause();
+            model.pause();
         } else if (status.getTask() == State.Task.BeforeWork){
-            timer.workTime();
+            model.workTime();
         } else{
-            timer.breakTime();
+            model.breakTime();
+        }
+    }
+
+    public void handleStopButtonClick(){
+        System.out.println("Stop button has been pressed");
+        State status = model.getStatus();
+        if(status.getTask() == State.Task.Work || status.getTask() == State.Task.Break){
+            model.stop();
         }
     }
 }

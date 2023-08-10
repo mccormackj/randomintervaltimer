@@ -1,62 +1,111 @@
 package com.randomintervaltimer;
 
-import java.time.LocalTime;
+import  java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Timer{
+import javafx.animation.AnimationTimer;
 
-    public State status;
-    public Settings settings;
 
-    Timer(){
-        settings = new Settings();
-        status = new State();
+public class Timer extends AnimationTimer{
+    private Duration duration;
+    private Duration updatingDuration = Duration.ZERO;
+    private long startTime = Long.MIN_VALUE;
+    private long pauseTime = Long.MIN_VALUE;
+    private boolean toPause = false;
+    private Alarm alarm = new Alarm();
+    private AtomicBoolean running = new AtomicBoolean(false);
+
+    Timer(long duration, ChronoUnit unit){
+        setDuration(duration, unit);
     }
 
-    public State getStatus() {
-        return status;
+    Timer(long duration){
+        setDuration(duration);
     }
 
-    public void breakTime(){
-        timeHelper(calculateBreakInterval());
-        
-    }
-    
-    public void workTime(){
-        timeHelper(calculateWorkInterval());
+    public Alarm getAlarm(){
+        return alarm;
     }
 
-    private void timeHelper(int duration){
-        status.nextTask();
-        LocalTime start = LocalTime.now();
-        while(ChronoUnit.MINUTES.between(start, LocalTime.now()) < duration);
-        alarm();
-        status.nextTask();
+    public void setDuration(long duration, ChronoUnit unit) {
+        this.duration = Duration.of(duration, unit);
     }
 
-    private void alarm(){
-        System.out.println(status.getTask() + " Time is over!");
-        //TODO: Handle alarm
+    public void setDuration(long duration) {
+        this.duration = Duration.ofSeconds(duration);
     }
 
-    public void pause(){
-        //TODO: Handle Pause
+    // public boolean getAlarm(){
+    //     return alarm;
+    // }
+
+    // public boolean resetAlarm() {
+    //     if(alarm){
+    //         alarm = false;
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    @Override
+    public void start(){
+        updatingDuration = Duration.ZERO;
+        toPause = false;
+        running.set(true);
+        //alarm = false;
+        super.start();
     }
 
     public void resume(){
-        //TODO: Handle resume
+        toPause = false;
+        super.start();
     }
 
-    public int calculateWorkInterval(){
-        return randomBetween(settings.getWorkMin(), settings.getWorkMax());
+    public void pause(){
+        toPause = true;
     }
 
-    public int calculateBreakInterval(){
-        return randomBetween(settings.getBreakMin(), settings.getBreakMax());
+    @Override
+    public void handle(long now){
+        if(toPause){
+            pauseTime = now;
+            toPause = false;
+            System.out.println("Pausing at " + updatingDuration.getSeconds() + " seconds in!");
+            stop();
+        } else if (startTime == Long.MIN_VALUE){
+            // starting timer
+            startTime = now;
+            pauseTime = Long.MIN_VALUE;
+            System.out.println("Starting timer!");
+        } else if (pauseTime != Long.MIN_VALUE) {
+            // timer unpaused
+            startTime += (now - pauseTime);
+            pauseTime = Long.MIN_VALUE;
+            System.out.println("Resuming with " + updatingDuration.getSeconds() + " seconds in!");
+        } else {
+            updatingDuration = Duration.ofNanos(now - startTime);
+            if(updatingDuration.compareTo(duration) >= 0){
+                //alarm here?
+                alarm.play();
+                System.out.println("Timer is up!");
+                System.out.println(duration.getSeconds() + " seconds have passed!");
+                reset();
+            }
+        }
     }
 
-    private int randomBetween(int min, int max){
-        return (int)(Math.round(Math.random() * (max - min) + min));
+    public void reset(){
+        stop();
+        running.set(false);;
+        startTime = Long.MIN_VALUE;
+        pauseTime = Long.MIN_VALUE;
+        toPause = false;
+        updatingDuration = Duration.ZERO;
+        System.out.println("Resetting the timer!");
     }
 
+    public boolean isRunning(){
+        return running.get();
+    }
 }

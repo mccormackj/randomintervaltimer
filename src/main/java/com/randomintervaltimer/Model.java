@@ -6,12 +6,14 @@ public class Model{
     public Settings settings;
     private Timer timer;
     private AlarmListener listener;
+    private Controller controller;
 
-    Model(){
+    Model(Controller controller){
         settings = new Settings();
         status = new State();
         timer = new Timer(settings.getWorkMin());
         listener = new AlarmListener();
+        this.controller = controller;
     }
 
     public State getStatus() {
@@ -19,7 +21,7 @@ public class Model{
     }
 
     public void breakTime(){
-        status.nextTask();
+        taskChange();
         System.out.println(status.getTask());
 
         timer.setDuration(calculateBreakInterval());
@@ -30,7 +32,7 @@ public class Model{
     }
     
     public void workTime(){
-        status.nextTask();
+        taskChange();
         System.out.println(status.getTask());
 
         timer.setDuration(calculateWorkInterval());
@@ -55,7 +57,7 @@ public class Model{
     public void stop(){
         listener.interrupt();
         System.out.println("Stopping in Model");
-        status.nextTask();
+        taskChange();
         System.out.println(status.getTask());
         timer.reset();
     }
@@ -78,10 +80,15 @@ public class Model{
             while(timer.isRunning());
             if(!interrupted()){
                 System.out.println("Stopping in Listener");
-                status.nextTask();
+                taskChange();
                 System.out.println(status.getTask());
                 timer.reset();
             }
         }
+    }
+
+    private void taskChange(){
+        status.nextTask();
+        controller.taskFinished();
     }
 }

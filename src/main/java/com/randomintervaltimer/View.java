@@ -4,20 +4,18 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class View extends Application {
     private Controller controller = new Controller();
+    ImageView playCtrl;
     Image play;
     Image pause;
 
     public void start(Stage stage){
+        controller.connectView(this);
         Group root = new Group();
         Scene scene = new Scene(root, 400, 300);
         
@@ -34,22 +32,21 @@ public class View extends Application {
         play = new Image(dir + "\\play_icon.png", 100, 100, true, true);
         pause = new Image(dir + "\\pause_icon.png", 100, 100, true, true);
         Image stop = new Image(dir + "\\stop_icon.png", 100, 100, true, true);
-        ImageView playCtrl = new ImageView(play);
+        playCtrl = new ImageView(play);
         playCtrl.setOnMouseClicked(e -> {
             controller.handleStartButtonClick();
-            playCtrl.setImage(playCtrl.getImage().equals(play) ? pause : play);
-            playCtrl.setPickOnBounds(!playCtrl.isPickOnBounds());
         });
         ImageView stopCtrl = new ImageView(stop);
         stopCtrl.setOnMouseClicked(e -> {
             controller.handleStopButtonClick();
-            if(playCtrl.getImage().equals(pause)){
-                playCtrl.setImage(play);
-                playCtrl.setPickOnBounds(!playCtrl.isPickOnBounds());
-            }
         });
         btnBox.getChildren().addAll(playCtrl, stopCtrl);
         return btnBox;
+    }
+
+    public void togglePlayImage(){
+        playCtrl.setImage(playCtrl.getImage().equals(play) ? pause : play);
+        playCtrl.setPickOnBounds(!playCtrl.isPickOnBounds());
     }
 
     public static void main(String[] args) {

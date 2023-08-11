@@ -13,9 +13,8 @@ public class Alarm {
     MediaPlayer mediaPlayer;
     Alarm(){
         Path dir = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources");
-        System.out.println(dir);
-        notifPath = dir.resolve("mixkit-bell-notification-933.wav");     // For example
-
+        notifPath = dir.resolve("mixkit-bell-notification-933.wav"); 
+        
         sound = new Media(notifPath.toUri().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setOnEndOfMedia(() -> {this.mediaPlayer = new MediaPlayer(sound);});

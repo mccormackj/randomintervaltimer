@@ -59,6 +59,7 @@ public class Model{
         System.out.println("Stopping in Model");
         taskChange();
         System.out.println(status.getTask());
+        status.setPaused(false);
         timer.reset();
     }
 
@@ -74,6 +75,13 @@ public class Model{
         return (int)(Math.round(Math.random() * (max - min) + min));
     }
 
+    private void taskChange(){
+        if(!status.isPaused()){
+            controller.playPauseToggle();
+        }
+        status.nextTask();
+    }
+
     private class AlarmListener extends Thread{
         @Override
         public void run(){
@@ -85,10 +93,5 @@ public class Model{
                 timer.reset();
             }
         }
-    }
-
-    private void taskChange(){
-        status.nextTask();
-        controller.taskFinished();
     }
 }

@@ -1,7 +1,9 @@
 package com.randomintervaltimer;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
@@ -52,4 +54,10 @@ public class View extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        controller.close();
+}
 }

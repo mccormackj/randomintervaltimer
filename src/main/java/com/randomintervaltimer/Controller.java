@@ -31,7 +31,7 @@ public class Controller {
         }
     }
 
-    public void taskFinished(){
+    public void playPauseToggle(){
         view.togglePlayImage();
     }
 
@@ -42,5 +42,9 @@ public class Controller {
 
     public void connectModel(Model model){
         this.model = model;
+    }
+
+    public void close(){
+        model.stop();
     }
 }

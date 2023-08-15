@@ -80,6 +80,7 @@ public class Model{
             controller.playPauseToggle();
         }
         status.nextTask();
+        controller.taskChange();
     }
 
     private class AlarmListener extends Thread{

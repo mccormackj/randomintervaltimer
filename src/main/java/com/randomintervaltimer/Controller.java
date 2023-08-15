@@ -35,6 +35,12 @@ public class Controller {
         view.togglePlayImage();
     }
 
+    public void taskChange(){
+        State.Task currTask = model.getStatus().getTask();
+        String text = (currTask == State.Task.Work || currTask == State.Task.BeforeWork) ? "Work Time": "Break Time";
+        view.setTaskDisplay(text);
+    }
+
 
     public void connectView(View view){
         this.view = view;

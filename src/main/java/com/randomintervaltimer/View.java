@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -34,73 +36,42 @@ public class View extends Application {
     Image pause;
     Label task;
     List<Font> fonts;
+    Stage stage;
 
     public void start(Stage stage){
+        this.stage = stage;
         controller.connectView(this);
         loadAssets();
 
         GridPane root = new GridPane();
         Scene scene = new Scene(root, 400, 300);
+        scene.setFill(Color.TRANSPARENT);
 
-        Button settings = new Button("Settings");
-        settings.setOnMouseClicked(e -> {
-            SettingsView settingsWindow = new SettingsView(controller.getSettings());
-            Stage settingsStage = new Stage();
-            settingsWindow.start(settingsStage);
-        });
-        settings.setAlignment(Pos.CENTER_LEFT);
-       
-        Button exit = new Button("x");
-        exit.setOnMouseClicked(e -> {
-            Platform.exit();
-        });
-        exit.setAlignment(Pos.CENTER_RIGHT);
-
-        Button minimize = new Button("-");
-        minimize.setOnMouseClicked(e -> {
-            stage.setIconified(true);
-        });
-        minimize.setAlignment(Pos.CENTER_RIGHT);
-
-        GridPane toolbar = new GridPane();
-        
-        toolbar.setMinHeight(30);
-        GridPane.setVgrow(toolbar, Priority.NEVER);
-        toolbar.setPadding(new Insets(5));
-        toolbar.setHgap(5);
-
-        toolbar.getChildren().addAll(settings,minimize,exit);
-        GridPane.setColumnIndex(settings, 0);
-        GridPane.setColumnIndex(minimize, 1);
-        GridPane.setColumnIndex(exit,2);
-        GridPane.setHalignment(settings, HPos.LEFT);
-        GridPane.setHalignment(minimize, HPos.RIGHT);
-        GridPane.setHalignment(exit, HPos.RIGHT);
-        GridPane.setHgrow(settings, Priority.SOMETIMES);
+        GridPane toolbar = createToolbar();        
         toolbar.prefWidthProperty().bind(scene.widthProperty());
-
-        //toolbar.setGridLinesVisible(true);
-        //toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        // FOR DEBUG
+        // toolbar.setGridLinesVisible(true);
+        // toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 
         task = createFormattedTask();
-        task.setMinWidth(scene.getWidth());
-        task.setMinHeight(scene.getHeight()/10);
+        task.prefWidthProperty().bind(scene.widthProperty());
+        task.prefHeightProperty().bind(Bindings.divide(scene.heightProperty(), 10));
         GridPane.setHgrow(task, Priority.ALWAYS);
         GridPane.setVgrow(task, Priority.SOMETIMES);
 
         HBox btnBox = createButtons();
-        btnBox.setMinWidth(scene.getWidth());
+        btnBox.prefWidthProperty().bind(scene.widthProperty());
         GridPane.setHgrow(btnBox, Priority.ALWAYS);
         GridPane.setVgrow(btnBox, Priority.ALWAYS);
 
-        BackgroundFill fill = new BackgroundFill(new Color(0.243,0.329,0.275,1), null, null);
-        Background bkgd = new Background(fill, null);
+        BackgroundFill fill = new BackgroundFill(new Color(0.243,0.329,0.275,1), new CornerRadii(15), null);
+        Background bkgd = new Background(fill);
         root.setBackground(bkgd);
 
         root.getChildren().addAll(toolbar, task,btnBox);
         GridPane.setRowIndex(task, 1);
         GridPane.setRowIndex(btnBox, 2);
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("Random Interval Timer");
         stage.setScene(scene);
         stage.show();
@@ -138,6 +109,53 @@ public class View extends Application {
         HBox.setHgrow(playCtrl, Priority.ALWAYS);
         HBox.setHgrow(stopCtrl, Priority.ALWAYS);
         return btnBox;
+    }
+
+    public GridPane createToolbar(){
+        Button settings = new Button("Settings");
+        settings.setOnMouseClicked(e -> {
+            SettingsView settingsWindow = new SettingsView(controller.getSettings());
+            Stage settingsStage = new Stage();
+            settingsWindow.start(settingsStage);
+        });
+        settings.setAlignment(Pos.CENTER_LEFT);
+       
+        Button exit = new Button("x");
+        exit.setOnMouseClicked(e -> {
+            Platform.exit();
+        });
+        exit.setAlignment(Pos.CENTER_RIGHT);
+
+        Button minimize = new Button("-");
+        minimize.setOnMouseClicked(e -> {
+            stage.setIconified(true);
+        });
+        minimize.setAlignment(Pos.CENTER_RIGHT);
+
+        GridPane toolbar = new GridPane();
+        
+        toolbar.setMinHeight(30);
+        GridPane.setVgrow(toolbar, Priority.NEVER);
+        toolbar.setPadding(new Insets(10));
+        toolbar.setHgap(5);
+
+        Color toolbarColor = new Color(0.223,0.302,0.251,1);
+        CornerRadii topCornerRadii = new CornerRadii(15, 15, 15, 15, 0, 0, 0, 0, false, false, false, false, false, false, false, false);
+        toolbar.setBackground(new Background(new BackgroundFill(toolbarColor, topCornerRadii, null)));
+
+        toolbar.getChildren().addAll(settings,minimize,exit);
+
+        GridPane.setColumnIndex(settings, 0);
+        GridPane.setHalignment(settings, HPos.LEFT);
+        GridPane.setHgrow(settings, Priority.SOMETIMES);
+
+        GridPane.setColumnIndex(minimize, 1);
+        GridPane.setHalignment(minimize, HPos.RIGHT);
+
+        GridPane.setColumnIndex(exit,2);
+        GridPane.setHalignment(exit, HPos.RIGHT);
+         
+        return toolbar;
     }
 
     public void setTaskDisplay(String text){

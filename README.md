@@ -7,8 +7,10 @@ Since the Pomodoro method improves many people's productivity, I wanted to match
 ## How do I use it?
 Click the Start button to start your current period (work/break), and click pause/resume as needed. When your time period is over, the timer will automatically switch and prepare to start the next period when you press the button. Note that, by nature of the timer's goal, a countdown wil **not** be shown on the timer.
 
+To change your settings, press the "settings" button in the top right corner. A new window will pop up which allows you to adjust the min/max of the work and break periods. Be sure to press the save button before closing this window to ensure your edits are changed.
+
 ## Current status
-Single thread timer when button clicked,
+Basic functionalities are working, but future updates will be made for better stylization.
 
 ## Psychology Resources
 - [Operant Conditioning](https://www.simplypsychology.org/operant-conditioning.html)

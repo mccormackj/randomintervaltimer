@@ -44,7 +44,9 @@ public class View extends Application {
 
         Button settings = new Button("Settings");
         settings.setOnMouseClicked(e -> {
-            System.out.println("Will open settings menu");
+            SettingsView settingsWindow = new SettingsView(controller.getSettings());
+            Stage settingsStage = new Stage();
+            settingsWindow.start(settingsStage);
         });
         settings.setAlignment(Pos.CENTER_LEFT);
        

@@ -19,6 +19,10 @@ public class Model{
     public State getStatus() {
         return status;
     }
+    
+    public Settings getSettings(){
+        return settings;
+    }
 
     public void breakTime(){
         taskChange();

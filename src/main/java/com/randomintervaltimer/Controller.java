@@ -50,6 +50,10 @@ public class Controller {
         this.model = model;
     }
 
+    public Settings getSettings(){
+        return model.getSettings();
+    }
+
     public void close(){
         model.stop();
     }

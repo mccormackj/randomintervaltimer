@@ -4,9 +4,14 @@ import java.io.File;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -18,7 +23,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 
 public class View extends Application {
     private Controller controller = new Controller();
@@ -34,6 +41,45 @@ public class View extends Application {
 
         GridPane root = new GridPane();
         Scene scene = new Scene(root, 400, 300);
+
+        Button settings = new Button("Settings");
+        settings.setOnMouseClicked(e -> {
+            System.out.println("Will open settings menu");
+        });
+        settings.setAlignment(Pos.CENTER_LEFT);
+       
+        Button exit = new Button("x");
+        exit.setOnMouseClicked(e -> {
+            Platform.exit();
+        });
+        exit.setAlignment(Pos.CENTER_RIGHT);
+
+        Button minimize = new Button("-");
+        minimize.setOnMouseClicked(e -> {
+            stage.setIconified(true);
+        });
+        minimize.setAlignment(Pos.CENTER_RIGHT);
+
+        GridPane toolbar = new GridPane();
+        
+        toolbar.setMinHeight(30);
+        GridPane.setVgrow(toolbar, Priority.NEVER);
+        toolbar.setPadding(new Insets(5));
+        toolbar.setHgap(5);
+
+        toolbar.getChildren().addAll(settings,minimize,exit);
+        GridPane.setColumnIndex(settings, 0);
+        GridPane.setColumnIndex(minimize, 1);
+        GridPane.setColumnIndex(exit,2);
+        GridPane.setHalignment(settings, HPos.LEFT);
+        GridPane.setHalignment(minimize, HPos.RIGHT);
+        GridPane.setHalignment(exit, HPos.RIGHT);
+        GridPane.setHgrow(settings, Priority.SOMETIMES);
+        toolbar.prefWidthProperty().bind(scene.widthProperty());
+
+        //toolbar.setGridLinesVisible(true);
+        //toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+
         task = createFormattedTask();
         task.setMinWidth(scene.getWidth());
         task.setMinHeight(scene.getHeight()/10);
@@ -49,9 +95,10 @@ public class View extends Application {
         Background bkgd = new Background(fill, null);
         root.setBackground(bkgd);
 
-        root.getChildren().addAll(task,btnBox);
-        GridPane.setRowIndex(task, 0);
-        GridPane.setRowIndex(btnBox, 1);
+        root.getChildren().addAll(toolbar, task,btnBox);
+        GridPane.setRowIndex(task, 1);
+        GridPane.setRowIndex(btnBox, 2);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Random Interval Timer");
         stage.setScene(scene);
         stage.show();

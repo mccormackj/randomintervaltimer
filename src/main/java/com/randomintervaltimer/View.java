@@ -187,9 +187,16 @@ public class View extends Application {
             });
         });
 
+        CornerRadii btnRadii = new CornerRadii(5);
+        for (Button btn : new Button[]{settings, minimize, exit}) {
+            btn.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, btnRadii, null)));
+            btn.setTextFill(Color.WHITE);
+            btn.setFont(Font.font("Nunito ExtraBold", btn.getFont().getSize()));
+        }
+
         Color fillColor = new Color(0.223,0.302,0.251,1);
-        CornerRadii topCornerRadii = new CornerRadii(15, 15, 15, 15, 0, 0, 0, 0, false, false, false, false, false, false, false, false);
-        toolbar.setBackground(new Background(new BackgroundFill(fillColor, topCornerRadii, null)));
+        CornerRadii taskbarRadii = new CornerRadii(15);
+        toolbar.setBackground(new Background(new BackgroundFill(fillColor, taskbarRadii, null)));
 
         Color borderColor = new Color(0.176, 0.239, 0.2,1);
         CornerRadii radii = new CornerRadii(15, 15, 0, 0, false);

@@ -58,8 +58,6 @@ public class View extends Application {
 
         GridPane toolbar = createToolbar();        
         toolbar.prefWidthProperty().bind(scene.widthProperty());
-        toolbar.minHeightProperty().bind(Bindings.multiply(((Button)toolbar.getChildren().get(0)).minHeightProperty(), 2));
-
         // FOR DEBUG
         // toolbar.setGridLinesVisible(true);
         // toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
@@ -116,11 +114,11 @@ public class View extends Application {
             currText.setFont(task.getFont());
             double currWidth = defaultText.getLayoutBounds().getWidth();
             
-            if(task.getWidth() > currWidth && currText.getFont().getSize() < 50){
-                //RESIZE UP
-                //BE SURE IT DOESN'T EXCEED 50
-            } else if (task.getWidth() < currWidth){
-                //RESIZE DOWN
+            boolean toGrow = task.getWidth() > currWidth && currText.getFont().getSize() < 50;
+            boolean toShrink = task.getWidth() < currWidth;
+            if(toGrow || toShrink){
+                int newSize = (int) Math.round(Math.min(50, 50 * task.getWidth() / defaultWidth));
+                task.setFont(Font.font("Nunito", newSize));
             }
         });
     

@@ -3,9 +3,12 @@ package com.randomintervaltimer;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
@@ -44,6 +47,8 @@ public class View extends Application {
 
     public void start(Stage stage){
         this.stage = stage;
+        stage.setMinWidth(100);
+        stage.setMinHeight(175);
         controller.connectView(this);
         loadAssets();
 
@@ -53,6 +58,8 @@ public class View extends Application {
 
         GridPane toolbar = createToolbar();        
         toolbar.prefWidthProperty().bind(scene.widthProperty());
+        toolbar.minHeightProperty().bind(Bindings.multiply(((Button)toolbar.getChildren().get(0)).minHeightProperty(), 2));
+
         // FOR DEBUG
         // toolbar.setGridLinesVisible(true);
         // toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
@@ -83,6 +90,16 @@ public class View extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("Random Interval Timer");
         stage.setScene(scene);
+        ResizeHelper.addResizeListener(stage);
+        scene.widthProperty().addListener(e -> {
+            btnBox.getChildren().forEach(child -> {
+                if(child instanceof ImageView){
+                    double newImgSize = Math.min(Math.min(stage.getHeight(), stage.getWidth()) / 3, 100);
+                    ((ImageView)child).setPreserveRatio(true);
+                    ((ImageView)child).setFitWidth(newImgSize);
+                }
+            });
+        });
         stage.show();
     }
 
@@ -90,6 +107,23 @@ public class View extends Application {
         task = new Label("Work Time");
         task.setAlignment(Pos.CENTER);
         task.setFont(Font.font("Nunito", 50));
+        task.widthProperty().addListener(e ->{
+            Text defaultText = new Text("Break Time");
+            defaultText.setFont(Font.font(task.getFont().getFamily(), 50));
+            double defaultWidth = defaultText.getLayoutBounds().getWidth();
+
+            Text currText = new Text("Break Time");
+            currText.setFont(task.getFont());
+            double currWidth = defaultText.getLayoutBounds().getWidth();
+            
+            if(task.getWidth() > currWidth && currText.getFont().getSize() < 50){
+                //RESIZE UP
+                //BE SURE IT DOESN'T EXCEED 50
+            } else if (task.getWidth() < currWidth){
+                //RESIZE DOWN
+            }
+        });
+    
         task.setTextFill(Color.WHITE);
         task.setTextAlignment(TextAlignment.CENTER);
         return task;
@@ -113,7 +147,7 @@ public class View extends Application {
         btnBox.getChildren().addAll(playCtrl, stopCtrl);
 
         btnBox.setAlignment(Pos.CENTER);
-        btnBox.setSpacing(25);
+        btnBox.spacingProperty().bind(Bindings.divide(playCtrl.fitWidthProperty(), 4));
 
         HBox.setHgrow(playCtrl, Priority.ALWAYS);
         HBox.setHgrow(stopCtrl, Priority.ALWAYS);
@@ -147,6 +181,13 @@ public class View extends Application {
         GridPane.setVgrow(toolbar, Priority.NEVER);
         toolbar.setPadding(new Insets(10));
         toolbar.setHgap(5);
+
+        toolbar.setOnMousePressed(pressEvent -> {
+            toolbar.setOnMouseDragged(dragEvent -> {
+                stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+            });
+        });
 
         Color fillColor = new Color(0.223,0.302,0.251,1);
         CornerRadii topCornerRadii = new CornerRadii(15, 15, 15, 15, 0, 0, 0, 0, false, false, false, false, false, false, false, false);

@@ -73,13 +73,12 @@ public class View extends Application {
         GridPane.setHgrow(btnBox, Priority.ALWAYS);
         GridPane.setVgrow(btnBox, Priority.ALWAYS);
 
-        BackgroundFill fill = new BackgroundFill(new Color(0.243,0.329,0.275,1), new CornerRadii(15), null);
+        BackgroundFill fill = new BackgroundFill(Palette.Green, new CornerRadii(15), null);
         Background bkgd = new Background(fill);
         root.setBackground(bkgd);
 
-        Color borderColor = new Color(0.176, 0.239, 0.2,1);
         CornerRadii radii = new CornerRadii(15);
-        BorderStroke bStroke = new BorderStroke(borderColor, borderColor, borderColor, borderColor, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, radii, new BorderWidths(2), Insets.EMPTY);
+        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, BorderStrokeStyle.SOLID, radii, new BorderWidths(2), Insets.EMPTY);
         root.setBorder(new Border(bStroke));
 
         root.getChildren().addAll(toolbar, task,btnBox);
@@ -198,13 +197,11 @@ public class View extends Application {
             btn.setFont(Font.font("Nunito ExtraBold", btn.getFont().getSize()));
         }
 
-        Color fillColor = new Color(0.223,0.302,0.251,1);
         CornerRadii taskbarRadii = new CornerRadii(15);
-        toolbar.setBackground(new Background(new BackgroundFill(fillColor, taskbarRadii, null)));
+        toolbar.setBackground(new Background(new BackgroundFill(Palette.DarkGreen, taskbarRadii, null)));
 
-        Color borderColor = new Color(0.176, 0.239, 0.2,1);
         CornerRadii radii = new CornerRadii(15, 15, 0, 0, false);
-        BorderStroke bStroke = new BorderStroke(borderColor, borderColor, borderColor, borderColor, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, radii, new BorderWidths(2), Insets.EMPTY);
+        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, radii, new BorderWidths(2), Insets.EMPTY);
         toolbar.setBorder(new Border(bStroke));
 
         toolbar.getChildren().addAll(settings,minimize,exit);

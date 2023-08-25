@@ -197,10 +197,9 @@ public class View extends Application {
             btn.setFont(Font.font("Nunito ExtraBold", btn.getFont().getSize()));
         }
 
-        CornerRadii taskbarRadii = new CornerRadii(15);
-        toolbar.setBackground(new Background(new BackgroundFill(Palette.DarkGreen, taskbarRadii, null)));
-
         CornerRadii radii = new CornerRadii(15, 15, 0, 0, false);
+        toolbar.setBackground(new Background(new BackgroundFill(Palette.DarkGreen, radii, null)));
+
         BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, radii, new BorderWidths(2), Insets.EMPTY);
         toolbar.setBorder(new Border(bStroke));
 

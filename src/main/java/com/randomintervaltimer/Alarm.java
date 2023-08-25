@@ -1,5 +1,6 @@
 package com.randomintervaltimer;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -12,7 +13,8 @@ public class Alarm {
     Media sound;
     MediaPlayer mediaPlayer;
     Alarm(){
-        Path dir = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources");
+        Path dir = Paths.get(System.getProperty("user.dir") 
+            +  File.separator + "src" + File.separator + "main" + File.separator + "resources");
         notifPath = dir.resolve("mixkit-bell-notification-933.wav"); 
         
         sound = new Media(notifPath.toUri().toString());

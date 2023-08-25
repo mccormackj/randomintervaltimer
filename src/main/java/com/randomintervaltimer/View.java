@@ -129,18 +129,22 @@ public class View extends Application {
 
     private HBox createButtons(){
         HBox btnBox = new HBox();
-        String dir = System.getProperty("user.dir") + "\\src\\main\\resources";
-        play = new Image(dir + "\\play_icon.png", 100, 100, true, true);
-        pause = new Image(dir + "\\pause_icon.png", 100, 100, true, true);
-        Image stop = new Image(dir + "\\stop_icon.png", 100, 100, true, true);
+        String sep = File.separator;
+        String dir = "src" + sep + "main" + sep + "resources";
+        //play = new Image(dir + "\\play_icon.png", 100, 100, true, true);
+        //pause = new Image(dir + "\\pause_icon.png", 100, 100, true, true);
+        ImageView stopCtrl = new ImageView(play);
+        Image stop = new Image("file:" + dir + sep + "stop_icon.png", 100, 100, true, true);
+        System.out.println("No stop error!" + "file:" + dir + sep + "stop_icon.png");
+        stopCtrl = new ImageView(stop);
+        stopCtrl.setOnMouseClicked(e -> {
+            controller.handleStopButtonClick();
+        });
         playCtrl = new ImageView(play);
         playCtrl.setOnMouseClicked(e -> {
             controller.handleStartButtonClick();
         });
-        ImageView stopCtrl = new ImageView(stop);
-        stopCtrl.setOnMouseClicked(e -> {
-            controller.handleStopButtonClick();
-        });
+
 
         btnBox.getChildren().addAll(playCtrl, stopCtrl);
 
@@ -148,7 +152,7 @@ public class View extends Application {
         btnBox.spacingProperty().bind(Bindings.divide(playCtrl.fitWidthProperty(), 4));
 
         HBox.setHgrow(playCtrl, Priority.ALWAYS);
-        HBox.setHgrow(stopCtrl, Priority.ALWAYS);
+        //HBox.setHgrow(stopCtrl, Priority.ALWAYS);
         return btnBox;
     }
 
@@ -232,10 +236,14 @@ public class View extends Application {
     }
 
     public void loadAssets(){
-        String resourcePath = System.getProperty("user.dir") + "\\src\\main\\resources";
-        play = new Image(resourcePath + "\\play_icon.png", 100, 100, true, true);
-        pause = new Image(resourcePath + "\\pause_icon.png", 100, 100, true, true);
-        File nunitoDir = new File(resourcePath + "\\nunito");
+        String sep = File.separator;
+        String resourcePath = "src" + sep + "main" + sep + "resources";
+        play = new Image("file:" + resourcePath + sep + "play_icon.png", 100, 100, true, true);
+        System.out.println("No play error! " + "file:" + resourcePath + sep + "play_icon.png");
+        pause = new Image("file:" + resourcePath + sep + "pause_icon.png", 100, 100, true, true);
+        System.out.println("No pause error! " + "file:" + resourcePath + sep + "pause_icon.png");
+
+        File nunitoDir = new File(resourcePath + sep + "nunito");
         for(File file: nunitoDir.listFiles()){
             int idxOfEnding = file.getAbsolutePath().lastIndexOf(".");
             String fileEnding = file.getAbsolutePath().substring(idxOfEnding, file.getAbsolutePath().length());

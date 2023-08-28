@@ -1,7 +1,6 @@
 package com.randomintervaltimer;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +8,11 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -18,7 +22,7 @@ import javafx.stage.StageStyle;
 import org.controlsfx.control.RangeSlider;
 
 import javafx.scene.paint.Color;
-
+import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -32,13 +36,19 @@ public class SettingsView extends Application{
     }
 
     public void start(Stage stage){
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
         GridPane root = new GridPane();
         Scene scene = new Scene(root, 300, 200);
+        scene.setFill(Color.TRANSPARENT);
 
-        Label workLabel = new Label("Range for Work periods: ");
-        Label breakLabel = new Label("Range for Break periods: ");
+        Label workLabel = new Label("Work Range: ");
+        workLabel.setFont(Font.font("nunito", workLabel.getFont().getSize()));
+        workLabel.setTextFill(Palette.DarkestGreen);
         root.add(workLabel, 0, 1);
+
+        Label breakLabel = new Label("Break Range: ");
+        breakLabel.setFont(Font.font("nunito", breakLabel.getFont().getSize()));
+        breakLabel.setTextFill(Palette.DarkestGreen);
         root.add(breakLabel, 0, 2);
 
 
@@ -96,6 +106,22 @@ public class SettingsView extends Application{
         toolbar.prefWidthProperty().bind(scene.widthProperty());
         root.add(toolbar, 0, 4);
 
+        root.setPadding(new Insets(10));
+
+        CornerRadii radii = new CornerRadii(15);
+        Background bkgd = new Background(new BackgroundFill((Color.WHITE), radii, null));
+        root.setBackground(bkgd);
+
+        BorderStroke bStroke = new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, radii, new BorderWidths(2), Insets.EMPTY);
+        root.setBorder(new Border(bStroke));
+
+        for (Button btn : new Button[]{save, minimize, exit}) {
+            CornerRadii btnRadii = new CornerRadii(5);
+            btn.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, btnRadii, null)));
+            btn.setTextFill(Palette.DarkestGreen);
+            btn.setFont(Font.font("Nunito ExtraBold", btn.getFont().getSize()));
+        }
+
         //toolbar.setGridLinesVisible(true);
         //toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 
@@ -106,6 +132,7 @@ public class SettingsView extends Application{
     public void formatSlider(RangeSlider slider){
         slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
+        slider.setPadding(new Insets(10,0,0,0));
     }
 
 }

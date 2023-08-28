@@ -108,11 +108,10 @@ public class SettingsView extends Application{
 
         root.setPadding(new Insets(10));
 
-        CornerRadii radii = new CornerRadii(15);
-        Background bkgd = new Background(new BackgroundFill((Color.WHITE), radii, null));
+        Background bkgd = new Background(new BackgroundFill((Color.WHITE), new CornerRadii(15), null));
         root.setBackground(bkgd);
 
-        BorderStroke bStroke = new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, radii, new BorderWidths(2), Insets.EMPTY);
+        BorderStroke bStroke = new BorderStroke(Color.GAINSBORO, BorderStrokeStyle.SOLID, new CornerRadii(13), new BorderWidths(2), Insets.EMPTY);
         root.setBorder(new Border(bStroke));
 
         for (Button btn : new Button[]{save, minimize, exit}) {

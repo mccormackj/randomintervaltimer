@@ -77,8 +77,7 @@ public class View extends Application {
         Background bkgd = new Background(fill);
         root.setBackground(bkgd);
 
-        CornerRadii radii = new CornerRadii(15);
-        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, BorderStrokeStyle.SOLID, radii, new BorderWidths(2), Insets.EMPTY);
+        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, BorderStrokeStyle.SOLID, new CornerRadii(13), new BorderWidths(2), Insets.EMPTY);
         root.setBorder(new Border(bStroke));
 
         root.getChildren().addAll(toolbar, task,btnBox);
@@ -197,10 +196,11 @@ public class View extends Application {
             btn.setFont(Font.font("Nunito ExtraBold", btn.getFont().getSize()));
         }
 
-        CornerRadii radii = new CornerRadii(15, 15, 0, 0, false);
-        toolbar.setBackground(new Background(new BackgroundFill(Palette.DarkGreen, radii, null)));
+        CornerRadii innerRadii = new CornerRadii(15, 15, 0, 0, false);
+        CornerRadii outerRadii = new CornerRadii(13,13,0,0,false);
+        toolbar.setBackground(new Background(new BackgroundFill(Palette.DarkGreen, innerRadii, null)));
 
-        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, radii, new BorderWidths(2), Insets.EMPTY);
+        BorderStroke bStroke = new BorderStroke(Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, Palette.DarkestGreen, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, outerRadii, new BorderWidths(2), Insets.EMPTY);
         toolbar.setBorder(new Border(bStroke));
 
         toolbar.getChildren().addAll(settings,minimize,exit);

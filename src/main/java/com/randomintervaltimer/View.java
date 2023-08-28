@@ -115,11 +115,8 @@ public class View extends Application {
         HBox btnBox = new HBox();
         String sep = File.separator;
         String dir = "src" + sep + "main" + sep + "resources";
-        //play = new Image(dir + "\\play_icon.png", 100, 100, true, true);
-        //pause = new Image(dir + "\\pause_icon.png", 100, 100, true, true);
         ImageView stopCtrl = new ImageView(play);
         Image stop = new Image("file:" + dir + sep + "stop_icon.png", 100, 100, true, true);
-        System.out.println("No stop error!" + "file:" + dir + sep + "stop_icon.png");
         stopCtrl = new ImageView(stop);
         stopCtrl.setOnMouseClicked(e -> {
             controller.handleStopButtonClick();
@@ -221,23 +218,21 @@ public class View extends Application {
         String sep = File.separator;
         String resourcePath = "src" + sep + "main" + sep + "resources";
         play = new Image("file:" + resourcePath + sep + "play_icon.png", 100, 100, true, true);
-        System.out.println("No play error! " + "file:" + resourcePath + sep + "play_icon.png");
         pause = new Image("file:" + resourcePath + sep + "pause_icon.png", 100, 100, true, true);
-        System.out.println("No pause error! " + "file:" + resourcePath + sep + "pause_icon.png");
 
         File nunitoDir = new File(resourcePath + sep + "nunito");
         for(File file: nunitoDir.listFiles()){
             int idxOfEnding = file.getAbsolutePath().lastIndexOf(".");
             String fileEnding = file.getAbsolutePath().substring(idxOfEnding, file.getAbsolutePath().length());
             if(fileEnding.equals(".ttf")){
-                Font currFont = Font.loadFont("file:" + file.getAbsolutePath(), 0);
+                Font.loadFont("file:" + file.getAbsolutePath(), 0);
             }
         }
     }
 
     @Override
     public void stop() throws Exception {
-        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        super.stop();
         controller.close();
 }
 }

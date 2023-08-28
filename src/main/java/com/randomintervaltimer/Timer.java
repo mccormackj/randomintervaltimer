@@ -71,25 +71,20 @@ public class Timer extends AnimationTimer{
         if(toPause){
             pauseTime = now;
             toPause = false;
-            System.out.println("Pausing at " + updatingDuration.getSeconds() + " seconds in!");
             stop();
         } else if (startTime == Long.MIN_VALUE){
             // starting timer
             startTime = now;
             pauseTime = Long.MIN_VALUE;
-            System.out.println("Starting timer!");
         } else if (pauseTime != Long.MIN_VALUE) {
             // timer unpaused
             startTime += (now - pauseTime);
             pauseTime = Long.MIN_VALUE;
-            System.out.println("Resuming with " + updatingDuration.getSeconds() + " seconds in!");
         } else {
             updatingDuration = Duration.ofNanos(now - startTime);
             if(updatingDuration.compareTo(duration) >= 0){
                 //alarm here?
                 alarm.play();
-                System.out.println("Timer is up!");
-                System.out.println(duration.getSeconds() + " seconds have passed!");
                 reset();
             }
         }
@@ -102,7 +97,6 @@ public class Timer extends AnimationTimer{
         pauseTime = Long.MIN_VALUE;
         toPause = false;
         updatingDuration = Duration.ZERO;
-        System.out.println("Resetting the timer!");
     }
 
     public boolean isRunning(){

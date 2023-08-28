@@ -124,9 +124,6 @@ public class SettingsView extends Application{
         slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
         slider.setPadding(new Insets(10,0,0,0));
-        Slider test = new Slider();
-        System.out.println(slider.getStyleClass());
-        System.out.println(slider.lookup("range-bar"));
     }
 
 }

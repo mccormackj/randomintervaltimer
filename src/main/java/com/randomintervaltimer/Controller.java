@@ -24,7 +24,6 @@ public class Controller {
     }
 
     public void handleStopButtonClick(){
-        System.out.println("Stop button has been pressed");
         State status = model.getStatus();
         if(status.getTask() == State.Task.Work || status.getTask() == State.Task.Break){
             model.stop();

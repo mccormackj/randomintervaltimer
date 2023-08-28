@@ -1,0 +1,13 @@
+.range-slider .range-bar {
+    -fx-background-color: rgb(62,84,70);
+}
+
+.range-slider .low-thumb,
+.range-slider .high-thumb {
+    -fx-background-color: rgb(62,84,70);
+}
+
+.range-slider .low-thumb:focused,
+.range-slider .high-thumb:focused {
+    -fx-background-insets: 0, 1, 2;
+}

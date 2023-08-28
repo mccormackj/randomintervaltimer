@@ -16,6 +16,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 
 
 
@@ -124,6 +126,7 @@ public class SettingsView extends Application{
         //toolbar.setGridLinesVisible(true);
         //toolbar.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -132,6 +135,9 @@ public class SettingsView extends Application{
         slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
         slider.setPadding(new Insets(10,0,0,0));
+        Slider test = new Slider();
+        System.out.println(slider.getStyleClass());
+        System.out.println(slider.lookup("range-bar"));
     }
 
 }

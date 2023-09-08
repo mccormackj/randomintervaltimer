@@ -1,5 +1,7 @@
 package com.randomintervaltimer;
 
+import javafx.application.Platform;
+
 public class Model{
 
     public State status;
@@ -86,8 +88,10 @@ public class Model{
         public void run(){
             while(timer.isRunning());
             if(!interrupted()){
-                taskChange();
-                timer.reset();
+                Platform.runLater(() -> {
+                    taskChange();
+                    timer.reset();
+                });
             }
         }
     }

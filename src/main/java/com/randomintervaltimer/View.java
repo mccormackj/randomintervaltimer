@@ -1,7 +1,12 @@
 package com.randomintervaltimer;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -113,10 +118,10 @@ public class View extends Application {
 
     private HBox createButtons(){
         HBox btnBox = new HBox();
-        String sep = File.separator;
-        String dir = "src" + sep + "main" + sep + "resources";
+
         ImageView stopCtrl = new ImageView(play);
-        Image stop = new Image("file:" + dir + sep + "stop_icon.png", 100, 100, true, true);
+        Image stop = new Image(this.getClass().getResourceAsStream("/stop_icon.png"), 100, 100, true, true);
+
         stopCtrl = new ImageView(stop);
         stopCtrl.setOnMouseClicked(e -> {
             controller.handleStopButtonClick();
@@ -215,19 +220,34 @@ public class View extends Application {
     }
 
     public void loadAssets(){
-        String sep = File.separator;
-        String resourcePath = "src" + sep + "main" + sep + "resources";
-        play = new Image("file:" + resourcePath + sep + "play_icon.png", 100, 100, true, true);
-        pause = new Image("file:" + resourcePath + sep + "pause_icon.png", 100, 100, true, true);
+        //String sep = File.separator;
+        // String resourcePath = "src" + sep + "main" + sep + "resources";
+        // play = new Image("file:" + resourcePath + sep + "play_icon.png", 100, 100, true, true);
+        // pause = new Image("file:" + resourcePath + sep + "pause_icon.png", 100, 100, true, true);
 
-        File nunitoDir = new File(resourcePath + sep + "nunito");
-        for(File file: nunitoDir.listFiles()){
-            int idxOfEnding = file.getAbsolutePath().lastIndexOf(".");
-            String fileEnding = file.getAbsolutePath().substring(idxOfEnding, file.getAbsolutePath().length());
-            if(fileEnding.equals(".ttf")){
-                Font.loadFont("file:" + file.getAbsolutePath(), 0);
-            }
+        // File nunitoDir = new File(resourcePath + sep + "nunito");
+
+        URL nunitoDir = this.getClass().getResource("/nunito");
+        System.out.println(nunitoDir);
+
+        
+        try{
+            System.out.println(nunitoDir.getContent());
+        } catch(Exception e){
+            System.out.println(e);
         }
+
+        play = new Image(this.getClass().getResourceAsStream("/play_icon.png"), 100, 100, true, true);
+        pause = new Image(this.getClass().getResourceAsStream("/pause_icon.png"), 100, 100, true, true);
+        
+        // File nunitoDir = new File("nunito");
+        // for(File file: nunitoDir.listFiles()){
+        //     int idxOfEnding = file.getAbsolutePath().lastIndexOf(".");
+        //     String fileEnding = file.getAbsolutePath().substring(idxOfEnding, file.getAbsolutePath().length());
+        //     if(fileEnding.equals(".ttf")){
+        //         Font.loadFont("file:" + file.getAbsolutePath(), 0);
+        //     }
+        // }
     }
 
     @Override

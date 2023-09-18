@@ -5,15 +5,8 @@
   <artifactId>randomintervaltimer</artifactId>
   <version>1.0-SNAPSHOT</version>
   <build>
+    <finalName>randomintervaltimer</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>com.randomintervaltimer.SuperMain</mainClass>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.5.0</version>

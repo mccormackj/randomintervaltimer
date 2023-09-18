@@ -1,27 +1,23 @@
 package com.randomintervaltimer;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URL;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 
 public class Alarm {
-    Path notifPath;
+    String notifPath;
     Media sound;
     MediaPlayer mediaPlayer;
     Alarm(){
-        Path dir = Paths.get(System.getProperty("user.dir") 
-            +  File.separator + "src" + File.separator + "main" + File.separator + "resources");
-        notifPath = dir.resolve("mixkit-bell-notification-933.wav"); 
-        
-        sound = new Media(notifPath.toUri().toString());
+        URL notifURL = this.getClass().getResource("/mixkit-bell-notification-933.wav");
+        sound = new Media(notifURL.toExternalForm());
+
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setOnEndOfMedia(() -> {this.mediaPlayer = new MediaPlayer(sound);});
     }
-    
+
     public void play(){
         mediaPlayer.play();
     }

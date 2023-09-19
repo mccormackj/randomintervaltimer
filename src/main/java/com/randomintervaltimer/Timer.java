@@ -33,7 +33,7 @@ public class Timer extends AnimationTimer{
     }
 
     public void setDuration(long duration) {
-        this.duration = Duration.ofSeconds(duration);
+        this.duration = Duration.ofMinutes(duration);
     }
 
     // public boolean getAlarm(){

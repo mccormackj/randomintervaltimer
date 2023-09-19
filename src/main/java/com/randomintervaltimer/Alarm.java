@@ -15,7 +15,9 @@ public class Alarm {
         sound = new Media(notifURL.toExternalForm());
 
         mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setOnEndOfMedia(() -> {this.mediaPlayer = new MediaPlayer(sound);});
+        mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.stop();
+            });
     }
 
     public void play(){

@@ -220,34 +220,12 @@ public class View extends Application {
     }
 
     public void loadAssets(){
-        //String sep = File.separator;
-        // String resourcePath = "src" + sep + "main" + sep + "resources";
-        // play = new Image("file:" + resourcePath + sep + "play_icon.png", 100, 100, true, true);
-        // pause = new Image("file:" + resourcePath + sep + "pause_icon.png", 100, 100, true, true);
-
-        // File nunitoDir = new File(resourcePath + sep + "nunito");
-
-        URL nunitoDir = this.getClass().getResource("/nunito");
-        System.out.println(nunitoDir);
-
-        
-        try{
-            System.out.println(nunitoDir.getContent());
-        } catch(Exception e){
-            System.out.println(e);
-        }
-
         play = new Image(this.getClass().getResourceAsStream("/play_icon.png"), 100, 100, true, true);
         pause = new Image(this.getClass().getResourceAsStream("/pause_icon.png"), 100, 100, true, true);
         
-        // File nunitoDir = new File("nunito");
-        // for(File file: nunitoDir.listFiles()){
-        //     int idxOfEnding = file.getAbsolutePath().lastIndexOf(".");
-        //     String fileEnding = file.getAbsolutePath().substring(idxOfEnding, file.getAbsolutePath().length());
-        //     if(fileEnding.equals(".ttf")){
-        //         Font.loadFont("file:" + file.getAbsolutePath(), 0);
-        //     }
-        // }
+        URL nunitoDir = this.getClass().getResource("/nunito");
+        System.out.println(nunitoDir);
+        Font.loadFont(this.getClass().getResourceAsStream("/Nunito-Regular.ttf"), 0);
     }
 
     @Override
